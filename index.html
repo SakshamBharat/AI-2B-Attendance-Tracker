@@ -249,7 +249,7 @@
   function fillSubjectSelect() {
     subjects.forEach((subj) => {
       const option = document.createElement("option");
-      option.value = `${subj.name} - ${subj.professor} - ${subj.code}`;
+      option.value = `${subj.name}-${subj.professor}\n-${subj.code}`;
       option.textContent = `${subj.name} | ${subj.professor} | ${subj.code}`;
       subjectSelect.appendChild(option);
     });
@@ -306,38 +306,49 @@
   }
 
   async function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-    const presentStudents = students.filter((s) => s.present);
-    if (presentStudents.length === 0) {
-      alert("No students marked present!");
-      return;
-    }
+  const presentStudents = students.filter((s) => s.present);
+  const total = students.length;
+  const present = presentStudents.length;
+  const absent = total - present;
 
-    doc.setFontSize(16);
-    doc.text("AI-2B Attendance Report", 14, 20);
-    doc.setFontSize(12);
-    doc.text(`Date & Time: ${getCurrentDateTime()}`, 14, 30);
-
-    if (subjectSelect.value) {
-      doc.text(`Subject/Professor/Code: ${subjectSelect.value}`, 14, 40);
-    } else {
-      doc.text("Subject/Professor/Code: Not selected", 14, 40);
-    }
-
-    // Prepare table data
-    const tableColumn = ["Roll No", "Name"];
-    const tableRows = presentStudents.map((s) => [s.roll, s.name]);
-
-    doc.autoTable({
-      head: [tableColumn],
-      body: tableRows,
-      startY: 50,
-    });
-
-    doc.save("AI-2B-Attendance.pdf");
+  if (presentStudents.length === 0) {
+    alert("No students marked present!");
+    return;
   }
+
+  doc.setFontSize(16);
+  doc.text("AI-2B Attendance Report", 14, 20);
+
+  doc.setFontSize(12);
+  doc.text(`Date & Time: ${getCurrentDateTime()}`, 14, 30);
+
+  if (subjectSelect.value) {
+    doc.text(`Subject/Professor/Code: ${subjectSelect.value}`, 14, 40);
+  } else {
+    doc.text("Subject/Professor/Code: Not selected", 14, 40);
+  }
+
+  // Add attendance summary
+  doc.text(`Total Students: ${total}`, 14, 50);
+  doc.text(`Present Students: ${present}`, 14, 57);
+  doc.text(`Absent Students: ${absent}`, 14, 64);
+
+  // Prepare table data
+  const tableColumn = ["Roll No", "Name"];
+  const tableRows = presentStudents.map((s) => [s.roll, s.name]);
+
+  doc.autoTable({
+    head: [tableColumn],
+    body: tableRows,
+    startY: 72, // start below the summary
+  });
+
+  doc.save("AI-2B-Attendance.pdf");
+}
+
 
   downloadPDFBtn.addEventListener("click", downloadPDF);
 </script>
