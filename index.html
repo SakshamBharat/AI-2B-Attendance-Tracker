@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Attendance AI-2B</title>
+<link rel="shortcut icon" href="logo.jpeg" type="image/x-icon">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+  }
+.page-header {
+  text-align: center;
+  padding: 15px;
+  background-color: #007BFF;
+  color: white;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.page-header h1, .page-header p {
+  margin: 0;
+}
+
+  .page-footer {
+    background-color: #f1f1f1;
+    color: #555;
+    margin-top: 30px;
+    font-size: 0.9em;
+    border-top: 1px solid #ccc;
+    padding: 15px 10px;
+    display: flex;
+    justify-content: center;
+  }
+  label {
+    font-weight: bold;
+    color: #007BFF;
+    margin-right: 10px;
+  }
+  select {
+    padding: 5px 8px;
+    font-size: 1em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 400px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+  th {
+    background-color: #007BFF;
+    color: white;
+  }
+  input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+  .summary {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .summary p {
+    font-size: 1.2em;
+    margin: 5px;
+  }
+  button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 5px;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  footer {
+    margin-top: 30px;
+    text-align: center;
+  }
+  .footer-heading {
+    text-align: center;
+    margin-top: 30px;
+    color: #555;
+    font-weight: 600;
+    font-size: 1.5em;
+    font-family: Arial, sans-serif;
+  }
+  .page-header img {
+    height: 50px;
+    width: auto;
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <img src="logo 2.jpg" alt="">
+  <div>
+    <h1>Babu Banarsi Das University</h1>
+    <p>School of Engineering | BTech CSE AI Section AI-2B</p>
+  </div>
+  <img src="logo.jpeg" alt="">
+</header>
+
+
+
+<main>
+  <table>
+    <thead>
+      <tr>
+        <th>Roll No</th>
+        <th>Name</th>
+        <th>Present</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="student-table"></tbody>
+  </table>
+
+  <div class="summary">
+    <p>Total Students: <span id="total-count">0</span></p>
+    <p>Present: <span id="present-count">0</span></p>
+    <p>Absent: <span id="absent-count">0</span></p>
+    <button id="download-pdf-btn">Download PDF (Present Students)</button>
+  </div>
+</main>
+
+<footer>
+  <label for="subject-select">Select Subject / Professor / Code:</label>
+  <select id="subject-select">
+    <option value="">-- Select --</option>
+  </select>
+<section style="background-color: #ccc;">
+  <h1>All Rights Reserver &copy; Saksham Chaurasia & Saksham Bharat</h1>
+  <h2 class="footer-heading">Powered By Saksham Bharat</h2>
+  </section>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+<script>
+  const students = [
+    { roll: 1, name: "ADITYA KUMAR GUPTA", present: false },
+    { roll: 2, name: "ADITYA KUMAR MISHRA", present: false },
+    { roll: 3, name: "ADITYA MALL", present: false },
+    { roll: 4, name: "AFTAB ALAM", present: false },
+    { roll: 5, name: "AKSHAT HARI", present: false },
+    { roll: 6, name: "ANISH YADAV", present: false },
+    { roll: 7, name: "ANKIT KUMAR YADAV", present: false },
+    { roll: 8, name: "ANKITA MAURYA", present: false },
+    { roll: 9, name: "ANSHIKA YADAV", present: false },
+    { roll: 10, name: "ANUJ KUMAR", present: false },
+    { roll: 11, name: "ANUJ PAL", present: false },
+    { roll: 12, name: "ANUSH KUMAR MALL", present: false },
+    { roll: 13, name: "ASHISH PANDEY", present: false },
+    { roll: 14, name: "ASHWANI SINGH", present: false },
+    { roll: 15, name: "AVICHAL PANDEY", present: false },
+    { roll: 16, name: "AYUSH GUPTA", present: false },
+    { roll: 17, name: "AYUSH KUMAR MISHRA", present: false },
+    { roll: 18, name: "AYUSHI SHUKLA", present: false },
+    { roll: 19, name: "BHAVYA GUPTA", present: false },
+    { roll: 20, name: "DEEPAK PRAJAPATI", present: false },
+    { roll: 21, name: "DEEPANSHU GOYAL", present: false },
+    { roll: 22, name: "GARIMA SINGH", present: false },
+    { roll: 23, name: "GUNGUN GOSWAMI", present: false },
+    { roll: 24, name: "HIMANSHU", present: false },
+    { roll: 25, name: "HIMANSHU KUMAR", present: false },
+    { roll: 26, name: "HIMANSHU MAURYA", present: false },
+    { roll: 27, name: "KAMAKHYA SINGH YADAV", present: false },
+    { roll: 28, name: "KHUSHREET SETHI", present: false },
+    { roll: 29, name: "KRISHNA RAM", present: false },
+    { roll: 30, name: "LAXMIISH SHUKLA", present: false },
+    { roll: 31, name: "MAULIK KESARWANI", present: false },
+    { roll: 32, name: "MD ISRAIL", present: false },
+    { roll: 33, name: "NANDITA GUPTA", present: false },
+    { roll: 34, name: "NIKHIL KUMAR YADAV", present: false },
+    { roll: 35, name: "NIRIKSHA SHAHI", present: false },
+    { roll: 36, name: "PIYUSH DUBEY", present: false },
+    { roll: 37, name: "PRANJAL GUPTA", present: false },
+    { roll: 38, name: "PRASHIDHI SINGH BHADAU", present: false },
+    { roll: 39, name: "RAUNAK SINGH", present: false },
+    { roll: 40, name: "RAVIKANT YADAV", present: false },
+    { roll: 41, name: "RISHABH CHAUDHARY", present: false },
+    { roll: 42, name: "RITIK KUMARI", present: false },
+    { roll: 43, name: "SACHIN PAL", present: false },
+    { roll: 44, name: "SAKSHAM CHAURASIA", present: false },
+    { roll: 45, name: "SATYAM SINGH", present: false },
+    { roll: 46, name: "SAURABH KASHYAP", present: false },
+    { roll: 47, name: "SHAFIQURRAHMAN ANSAR", present: false },
+    { roll: 48, name: "SHALENDER PAL", present: false },
+    { roll: 49, name: "SHASHANK SHEKHAR", present: false },
+    { roll: 50, name: "SHIKHAR KUMAR VISHWAKARMA", present: false },
+    { roll: 51, name: "SHIVA KUMAR TIWARI", present: false },
+    { roll: 52, name: "SHIVAM KUMAR", present: false },
+    { roll: 53, name: "SHRESHTHA VERMA", present: false },
+    { roll: 54, name: "SHUBHAM CHAUBEY", present: false },
+    { roll: 55, name: "SHUBHAM GOYAL", present: false },
+    { roll: 56, name: "SIKHAR TIWARI", present: false },
+    { roll: 57, name: "SONU MISHRA", present: false },
+    { roll: 58, name: "SOURABH YADAV", present: false },
+    { roll: 59, name: "TANISHQ SHUKLA", present: false },
+    { roll: 60, name: "UMESH MOURYA", present: false },
+    { roll: 61, name: "VAIBHAV SINGH", present: false },
+    { roll: 62, name: "VAIBHAV TIWARI", present: false },
+    { roll: 63, name: "VAIBHAV TRIPATHI", present: false },
+    { roll: 64, name: "VANSH SHARMA", present: false },
+    { roll: 65, name: "VIPIN GUPTA", present: false },
+    { roll: 66, name: "VISHNU TIWARI", present: false },
+    { roll: 67, name: "VIVEK CHAND", present: false },
+    { roll: 68, name: "YADAV YOGENDRA", present: false },
+    { roll: 69, name: "YASHRAJ YADAV", present: false },
+    { roll: 70, name: "YUVRAJ TIWARI", present: false },
+    { roll: 71, name: "Shantanu", present: false }
+  ];
+
+  const subjects = [
+    { name: "Industrial Sociology", professor: "Dr Pooja Verma", code: "NHS4302" },
+    { name: "Complex Analysis and Integral Transformation", professor: "Mr US Shukla", code: "NBS4301" },
+    { name: "Discrete Math", professor: "Ms Pratibha Pandey", code: "NCS4301" },
+    { name: "Digital Logic Gate", professor: "Mr Chanchal Nigam", code: "NCS4303" },
+    { name: "Data Structure using C", professor: "Mr Peeyush Kumar Shukla", code: "NCS4302" },
+    { name: "Yoga", professor: "Ms Veena Dwivedi", code: "NCC5351" },
+    { name: "Artificial Intelligent in Mechanical Engineering", professor: "Mr Shailnder Vishwkarma", code: "NAI4302" },
+    { name: "Data Structure using C Lab", professor: "Mr Peeyush Kumar Shukla", code: "NCS4352" },
+    { name: "Digital Logic Gate Lab", professor: "Mr Chanchal Nigam", code: "NCS4353" },
+  ];
+
+  const tableBody = document.getElementById("student-table");
+  const totalCount = document.getElementById("total-count");
+  const presentCount = document.getElementById("present-count");
+  const absentCount = document.getElementById("absent-count");
+  const downloadPDFBtn = document.getElementById("download-pdf-btn");
+  const subjectSelect = document.getElementById("subject-select");
+
+  // Fill subject dropdown with combined info
+  function fillSubjectSelect() {
+    subjects.forEach((subj) => {
+      const option = document.createElement("option");
+      option.value = `${subj.name} - ${subj.professor} - ${subj.code}`;
+      option.textContent = `${subj.name} | ${subj.professor} | ${subj.code}`;
+      subjectSelect.appendChild(option);
+    });
+  }
+
+  fillSubjectSelect();
+
+  function updateCounts() {
+    const present = students.filter((s) => s.present).length;
+    const absent = students.length - present;
+
+    presentCount.textContent = present;
+    absentCount.textContent = absent;
+  }
+
+  students.forEach((student) => {
+    const row = document.createElement("tr");
+
+    const rollCell = document.createElement("td");
+    rollCell.textContent = student.roll;
+
+    const nameCell = document.createElement("td");
+    nameCell.textContent = student.name;
+
+    const checkboxCell = document.createElement("td");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.setAttribute('aria-label', `Mark ${student.name} as present`);
+
+    const statusCell = document.createElement("td");
+    statusCell.textContent = "Absent";
+
+    checkbox.addEventListener("change", (e) => {
+      student.present = e.target.checked;
+      statusCell.textContent = student.present ? "Present" : "Absent";
+      updateCounts();
+    });
+
+    checkboxCell.appendChild(checkbox);
+
+    row.appendChild(rollCell);
+    row.appendChild(nameCell);
+    row.appendChild(checkboxCell);
+    row.appendChild(statusCell);
+
+    tableBody.appendChild(row);
+  });
+
+  totalCount.textContent = students.length;
+  updateCounts();
+
+  function getCurrentDateTime() {
+    return new Date().toLocaleString();
+  }
+
+  async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const presentStudents = students.filter((s) => s.present);
+    if (presentStudents.length === 0) {
+      alert("No students marked present!");
+      return;
+    }
+
+    doc.setFontSize(16);
+    doc.text("AI-2B Attendance Report", 14, 20);
+    doc.setFontSize(12);
+    doc.text(`Date & Time: ${getCurrentDateTime()}`, 14, 30);
+
+    if (subjectSelect.value) {
+      doc.text(`Subject/Professor/Code: ${subjectSelect.value}`, 14, 40);
+    } else {
+      doc.text("Subject/Professor/Code: Not selected", 14, 40);
+    }
+
+    // Prepare table data
+    const tableColumn = ["Roll No", "Name"];
+    const tableRows = presentStudents.map((s) => [s.roll, s.name]);
+
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 50,
+    });
+
+    doc.save("AI-2B-Attendance.pdf");
+  }
+
+  downloadPDFBtn.addEventListener("click", downloadPDF);
+</script>
+</body>
+</html>
