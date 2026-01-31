@@ -143,100 +143,107 @@
   <select id="subject-select">
     <option value="">-- Select --</option>
   </select>
-<section style="background-color: #ccc;">
-  <h1>All Rights Reserver &copy; Saksham Chaurasia & Saksham Bharat</h1>
-  <h2 class="footer-heading">Powered By Saksham Bharat</h2>
+
+  <section style="background-color: #ccc; padding: 15px; margin-top: 15px;">
+    <h1>All Rights Reserved &copy; Saksham Chaurasia & Saksham Bharat</h1>
+    <h2 class="footer-heading">Powered By Saksham Bharat</h2>
+    <div style="margin-top: 10px; font-weight: bold;">
+      Upasthiti: A Saksham Bharat Product
+    </div>
   </section>
 </footer>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 <script>
   const students = [
-    { roll: 1, name: "ADITYA KUMAR GUPTA", present: false },
-    { roll: 2, name: "ADITYA KUMAR MISHRA", present: false },
-    { roll: 3, name: "ADITYA MALL", present: false },
-    { roll: 4, name: "AFTAB ALAM", present: false },
-    { roll: 5, name: "AKSHAT HARI", present: false },
-    { roll: 6, name: "ANISH YADAV", present: false },
-    { roll: 7, name: "ANKIT KUMAR YADAV", present: false },
-    { roll: 8, name: "ANKITA MAURYA", present: false },
-    { roll: 9, name: "ANSHIKA YADAV", present: false },
-    { roll: 10, name: "ANUJ KUMAR", present: false },
-    { roll: 11, name: "ANUJ PAL", present: false },
-    { roll: 12, name: "ANUSH KUMAR MALL", present: false },
-    { roll: 13, name: "ASHISH PANDEY", present: false },
-    { roll: 14, name: "ASHWANI SINGH", present: false },
-    { roll: 15, name: "AVICHAL PANDEY", present: false },
-    { roll: 16, name: "AYUSH GUPTA", present: false },
-    { roll: 17, name: "AYUSH KUMAR MISHRA", present: false },
-    { roll: 18, name: "AYUSHI SHUKLA", present: false },
-    { roll: 19, name: "BHAVYA GUPTA", present: false },
-    { roll: 20, name: "DEEPAK PRAJAPATI", present: false },
-    { roll: 21, name: "DEEPANSHU GOYAL", present: false },
-    { roll: 22, name: "GARIMA SINGH", present: false },
-    { roll: 23, name: "GUNGUN GOSWAMI", present: false },
-    { roll: 24, name: "HIMANSHU", present: false },
-    { roll: 25, name: "HIMANSHU KUMAR", present: false },
-    { roll: 26, name: "HIMANSHU MAURYA", present: false },
-    { roll: 27, name: "KAMAKHYA SINGH YADAV", present: false },
-    { roll: 28, name: "KHUSHREET SETHI", present: false },
-    { roll: 29, name: "KRISHNA RAM", present: false },
-    { roll: 30, name: "LAXMIISH SHUKLA", present: false },
-    { roll: 31, name: "MAULIK KESARWANI", present: false },
-    { roll: 32, name: "MD ISRAIL", present: false },
-    { roll: 33, name: "NANDITA GUPTA", present: false },
-    { roll: 34, name: "NIKHIL KUMAR YADAV", present: false },
-    { roll: 35, name: "NIRIKSHA SHAHI", present: false },
-    { roll: 36, name: "PIYUSH DUBEY", present: false },
-    { roll: 37, name: "PRANJAL GUPTA", present: false },
-    { roll: 38, name: "PRASHIDHI SINGH BHADAU", present: false },
-    { roll: 39, name: "RAUNAK SINGH", present: false },
-    { roll: 40, name: "RAVIKANT YADAV", present: false },
-    { roll: 41, name: "RISHABH CHAUDHARY", present: false },
-    { roll: 42, name: "RITIK KUMARI", present: false },
-    { roll: 43, name: "SACHIN PAL", present: false },
-    { roll: 44, name: "SAKSHAM CHAURASIA", present: false },
-    { roll: 45, name: "SATYAM SINGH", present: false },
-    { roll: 46, name: "SAURABH KASHYAP", present: false },
-    { roll: 47, name: "SHAFIQURRAHMAN ANSAR", present: false },
-    { roll: 48, name: "SHALENDER PAL", present: false },
-    { roll: 49, name: "SHASHANK SHEKHAR", present: false },
-    { roll: 50, name: "SHIKHAR KUMAR VISHWAKARMA", present: false },
-    { roll: 51, name: "SHIVA KUMAR TIWARI", present: false },
-    { roll: 52, name: "SHIVAM KUMAR", present: false },
-    { roll: 53, name: "SHRESHTHA VERMA", present: false },
-    { roll: 54, name: "SHUBHAM CHAUBEY", present: false },
-    { roll: 55, name: "SHUBHAM GOYAL", present: false },
-    { roll: 56, name: "SIKHAR TIWARI", present: false },
-    { roll: 57, name: "SONU MISHRA", present: false },
-    { roll: 58, name: "SOURABH YADAV", present: false },
-    { roll: 59, name: "TANISHQ SHUKLA", present: false },
-    { roll: 60, name: "UMESH MOURYA", present: false },
-    { roll: 61, name: "VAIBHAV SINGH", present: false },
-    { roll: 62, name: "VAIBHAV TIWARI", present: false },
-    { roll: 63, name: "VAIBHAV TRIPATHI", present: false },
-    { roll: 64, name: "VANSH SHARMA", present: false },
-    { roll: 65, name: "VIPIN GUPTA", present: false },
-    { roll: 66, name: "VISHNU TIWARI", present: false },
-    { roll: 67, name: "VIVEK CHAND", present: false },
-    { roll: 68, name: "YADAV YOGENDRA", present: false },
-    { roll: 69, name: "YASHRAJ YADAV", present: false },
-    { roll: 70, name: "YUVRAJ TIWARI", present: false },
-    { roll: 71, name: "Shantanu", present: false }
-  ];
+  { roll: 1240439040, name: "ADITYA KUMAR GUPTA", present: false },
+  { roll: 1240439041, name: "ADITYA KUMAR MISHRA", present: false },
+  { roll: 1240439042, name: "ADITYA MALL", present: false },
+  { roll: 1240439055, name: "AFTAB ALAM", present: false },
+  { roll: 1240439064, name: "AKSHAT", present: false },
+  { roll: 1240439089, name: "ANISH YADAV", present: false },
+  { roll: 1240439095, name: "ANKIT KUMAR YADAV", present: false },
+  { roll: 1240439099, name: "ANKITA MAURYA", present: false },
+  { roll: 1240439103, name: "ANSHIKA YADAV", present: false },
+  { roll: 1240439113, name: "ANUJ KUMAR", present: false },
+  { roll: 1240439114, name: "ANUJ PAL", present: false },
+  { roll: 1240439122, name: "ANUSH KUMAR MALL", present: false },
+  { roll: 1240439139, name: "ASHISH PANDEY", present: false },
+  { roll: 1240439146, name: "ASHWANI SINGH", present: false },
+  { roll: 1240439150, name: "AVICHAL PANDEY", present: false },
+  { roll: 1240439158, name: "AYUSH GUPTA", present: false },
+  { roll: 1240439159, name: "AYUSH KUMAR MISHRA", present: false },
+  { roll: 1240439166, name: "AYUSHI SHUKLA", present: false },
+  { roll: 1240439169, name: "BHAVYA GUPTA", present: false },
+  { roll: 1240439174, name: "DEEPAK PRAJAPATI", present: false },
+  { roll: 1240439175, name: "DEEPANSHU GOYAL", present: false },
+  { roll: 1240439190, name: "GARIMA SINGH", present: false },
+  { roll: 1240439194, name: "GUNGUN GOSWAMI", present: false },
+  { roll: 1240439208, name: "HIMANSHU", present: false },
+  { roll: 1240439210, name: "HIMANSHU KUMAR", present: false },
+  { roll: 1240439212, name: "HIMANSHU MAURYA", present: false },
+  { roll: 1240439216, name: "KAMAKHYA SINGH YADAV", present: false },
+  { roll: 1240439228, name: "KHUSHREET SETHI", present: false },
+  { roll: 1240439233, name: "KRISHNA", present: false },
+  { roll: 1240439247, name: "LAXMIISH SHUKLA", present: false },
+  { roll: 1240439257, name: "MAULIK KESARWANI", present: false },
+  { roll: 1240439263, name: "MD ISRAIL", present: false },
+  { roll: 1240439286, name: "NANDITA GUPTA", present: false },
+  { roll: 1240439289, name: "NIKHIL KUMAR YADAV", present: false },
+  { roll: 1240439292, name: "NIRIKSHA SHAHI", present: false },
+  { roll: 1240439308, name: "PIYUSH DUBEY", present: false },
+  { roll: 1240439317, name: "PRANJAL GUPTA", present: false },
+  { roll: 1240439322, name: "PRASHIDHI SINGH BHADAURIYA", present: false },
+  { roll: 1240439344, name: "RAUNAK SINGH", present: false },
+  { roll: 1240439345, name: "RAVIKANT YADAV", present: false },
+  { roll: 1240439355, name: "RITIK KUMARI", present: false },
+  { roll: 1240439366, name: "SACHIN PAL", present: false },
+  { roll: 1240439368, name: "SAKSHAM CHAURASIA", present: false },
+  { roll: 1240439391, name: "SATYAM SINGH", present: false },
+  { roll: 1240439397, name: "SAURABH KASHYAP", present: false },
+  { roll: 1240439401, name: "SHAFIQURRAHMAN ANSARI", present: false },
+  { roll: 1240439404, name: "SHALENDER PAL", present: false },
+  { roll: 1240439410, name: "SHASHANK SHEKHAR", present: false },
+  { roll: 1240439412, name: "SHIKHAR KUMAR VISHWAKARMA", present: false },
+  { roll: 1240439414, name: "SHIVA KUMAR TIWARI", present: false },
+  { roll: 1240439426, name: "SHRESHTHA VERMA", present: false },
+  { roll: 1240439431, name: "SHUBHAM CHAUBEY", present: false },
+  { roll: 1240439432, name: "SHUBHAM GOYAL", present: false },
+  { roll: 1240439438, name: "SIKHAR TIWARI", present: false },
+  { roll: 1240439445, name: "SONU MISHRA", present: false },
+  { roll: 1240439466, name: "TANISHQ SHUKLA", present: false },
+  { roll: 1240439475, name: "UMESH MOURYA", present: false },
+  { roll: 1240439480, name: "VAIBHAV SINGH", present: false },
+  { roll: 1240439482, name: "VAIBHAV TIWARI", present: false },
+  { roll: 1240439483, name: "VAIBHAV TRIPATHI", present: false },
+  { roll: 1240439487, name: "VANSH SHARMA", present: false },
+  { roll: 1240439512, name: "VISHNU TIWARI", present: false },
+  { roll: 1240439514, name: "VIVEK CHAND", present: false },
+  { roll: 1240439517, name: "YADAV YOGENDRA SANTOSH", present: false },
+  { roll: 1240439526, name: "YASHRAJ YADAV", present: false },
+  { roll: 1240439532, name: "YUVRAJ TIWARI", present: false },
+  { roll: 1240439408, name: "SHANTANU", present: false }
+];
 
-  const subjects = [
-    { name: "Industrial Sociology", professor: "Dr Pooja Verma", code: "NHS4302" },
-    { name: "Complex Analysis and Integral Transformation", professor: "Mr US Shukla", code: "NBS4301" },
-    { name: "Discrete Math", professor: "Ms Pratibha Pandey", code: "NCS4301" },
-    { name: "Digital Logic Gate", professor: "Mr Chanchal Nigam", code: "NCS4303" },
-    { name: "Data Structure using C", professor: "Mr Peeyush Kumar Shukla", code: "NCS4302" },
-    { name: "Yoga", professor: "Ms Veena Dwivedi", code: "NCC5351" },
-    { name: "Artificial Intelligent in Mechanical Engineering", professor: "Mr Shailnder Vishwkarma", code: "NAI4302" },
-    { name: "Data Structure using C Lab", professor: "Mr Peeyush Kumar Shukla", code: "NCS4352" },
-    { name: "Digital Logic Gate Lab", professor: "Mr Chanchal Nigam", code: "NCS4353" },
-  ];
+
+ const subjects = [
+  { name: "Organizational Behavior", professor: "Dr. Pooja Verma", code: "NHS4401" },
+  { name: "Statistical and Numerical Techniques", professor: "Mr. U.S. Shukla", code: "NBS4401" },
+  { name: "Concepts of Machine Learning with Python", professor: "Ms. Vaishnavi Yadav", code: "NAI4401" },
+  { name: "Database Management Systems", professor: "Ms. Avantika", code: "NCS4401" },
+  { name: "Operating Systems", professor: "Mr. Yogendra Kumar Tripathi", code: "NCS4402" },
+  { name: "Computer Organization & Architecture", professor: "Ms. Poonam Verma", code: "NCS4404" },
+  { name: "Machine Learning Lab", professor: "Ms. Vaishnavi Yadav", code: "NAI4451" },
+  { name: "Database Management Systems Lab", professor: "Ms. Avantika", code: "NCS4451" },
+  { name: "Indian Constitution", professor: "New Faculty 1", code: "NVC4401" },
+  { name: "General Proficiency", professor: "Ms. Vaishnavi Yadav", code: "NGP4401" },
+  {name:"Utkarsh Celebration"},
+   {name:"auditorium"} 
+   
+];
+
 
   const tableBody = document.getElementById("student-table");
   const totalCount = document.getElementById("total-count");
