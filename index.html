@@ -6,85 +6,111 @@
 <title>Attendance AI-2B</title>
 <link rel="shortcut icon" href="logo.jpeg" type="image/x-icon">
 <style>
+  :root{
+    --primary: #007BFF;
+    --primary-dark: #0056b3;
+    --muted: #f1f1f1;
+  }
   body {
     font-family: Arial, sans-serif;
     padding: 20px;
     background-color: #f4f4f4;
+    margin: 0;
+    color: #222;
   }
-.page-header {
-  text-align: center;
-  padding: 15px;
-  background-color: #007BFF;
-  color: white;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.page-header h1, .page-header p {
-  margin: 0;
-}
-
-  .page-footer {
-    background-color: #f1f1f1;
-    color: #555;
-    margin-top: 30px;
-    font-size: 0.9em;
-    border-top: 1px solid #ccc;
-    padding: 15px 10px;
+  .page-header {
+    text-align: center;
+    padding: 15px;
+    background-color: var(--primary);
+    color: white;
+    margin-bottom: 20px;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
   }
-  label {
-    font-weight: bold;
-    color: #007BFF;
-    margin-right: 10px;
+  .page-header h1, .page-header p {
+    margin: 0;
   }
-  select {
-    padding: 5px 8px;
-    font-size: 1em;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    width: 400px;
+  .page-header img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
   }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    margin-bottom: 16px;
+  }
+  caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: 600;
+    padding: 12px;
+    font-size: 1.1em;
   }
   th, td {
-    border: 1px solid #ccc;
+    border: 1px solid #e0e0e0;
     padding: 10px;
     text-align: center;
   }
   th {
-    background-color: #007BFF;
+    background-color: var(--primary);
     color: white;
   }
   input[type="checkbox"] {
     transform: scale(1.2);
+    cursor: pointer;
   }
   .summary {
-    margin-top: 20px;
-    text-align: center;
+    margin-top: 6px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .summary-left {
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
   }
   .summary p {
-    font-size: 1.2em;
-    margin: 5px;
+    font-size: 1em;
+    margin: 0;
+    color: #333;
+  }
+  .controls {
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
   }
   button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #007BFF;
+    padding: 8px 14px;
+    background-color: var(--primary);
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 0.95em;
     border-radius: 5px;
   }
+  button.secondary {
+    background-color: #6c757d;
+  }
+  button.danger {
+    background-color: #dc3545;
+  }
   button:hover {
-    background-color: #0056b3;
+    filter:brightness(.95);
   }
   footer {
     margin-top: 30px;
@@ -92,59 +118,92 @@
   }
   .footer-heading {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 10px;
     color: #555;
     font-weight: 600;
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-family: Arial, sans-serif;
   }
-  .page-header img {
-    height: 50px;
-    width: auto;
+  label {
+    font-weight: bold;
+    color: var(--primary);
+    margin-right: 10px;
+  }
+  select {
+    padding: 6px 8px;
+    font-size: 1em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .footer-section {
+    background-color: #ccc;
+    padding: 15px;
+    margin-top: 15px;
+  }
+
+  @media (max-width: 700px) {
+    .page-header {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .summary {
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
 </style>
 </head>
 <body>
 
 <header class="page-header">
-  <img src="logo 2.jpg" alt="">
+  <img src="logo 2.jpg" alt="University logo left">
   <div>
     <h1>Babu Banarsi Das University</h1>
     <p>School of Engineering | BTech CSE AI Section AI-2B</p>
   </div>
-  <img src="logo.jpeg" alt="">
+  <img src="logo.jpeg" alt="University logo right">
 </header>
 
-
-
 <main>
-  <table>
+  <table aria-describedby="attendance-summary">
+    <caption>AI-2B Attendance</caption>
     <thead>
       <tr>
-        <th>Roll No</th>
-        <th>Name</th>
-        <th>Present</th>
-        <th>Status</th>
+        <th scope="col">Roll No</th>
+        <th scope="col">Name</th>
+        <th scope="col">Present</th>
+        <th scope="col">Status</th>
       </tr>
     </thead>
     <tbody id="student-table"></tbody>
   </table>
 
-  <div class="summary">
-    <p>Total Students: <span id="total-count">0</span></p>
-    <p>Present: <span id="present-count">0</span></p>
-    <p>Absent: <span id="absent-count">0</span></p>
-    <button id="download-pdf-btn">Download PDF (Present Students)</button>
+  <div class="summary" id="attendance-summary">
+    <div class="summary-left">
+      <p>Total Students: <strong id="total-count">0</strong></p>
+      <p>Present: <strong id="present-count">0</strong></p>
+      <p>Absent: <strong id="absent-count">0</strong></p>
+    </div>
+
+    <div class="controls">
+      <button id="mark-all-btn" title="Mark all students present">Mark All Present</button>
+      <button id="clear-all-btn" class="secondary" title="Clear all selections">Clear All</button>
+      <button id="save-btn" class="secondary" title="Save attendance to browser storage">Save Attendance</button>
+      <button id="download-pdf-btn" title="Download PDF of present students">Download PDF (Present Students)</button>
+    </div>
   </div>
 </main>
 
 <footer>
   <label for="subject-select">Select Subject / Professor / Code:</label>
-  <select id="subject-select">
+  <select id="subject-select" aria-label="Select subject">
     <option value="">-- Select --</option>
   </select>
 
-  <section style="background-color: #ccc; padding: 15px; margin-top: 15px;">
+  <section class="footer-section">
     <h1>All Rights Reserved &copy; Saksham Chaurasia & Saksham Bharat</h1>
     <h2 class="footer-heading">Powered By Saksham Bharat</h2>
     <div style="margin-top: 10px; font-weight: bold;">
@@ -153,208 +212,356 @@
   </section>
 </footer>
 
-
+<!-- Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
 <script>
- const students = [
-  { classRoll: 1, universityRoll: 1240439040, name: "ADITYA KUMAR GUPTA", present: false },
-  { classRoll: 2, universityRoll: 1240439041, name: "ADITYA KUMAR MISHRA", present: false },
-  { classRoll: 3, universityRoll: 1240439042, name: "ADITYA MALL", present: false },
-  { classRoll: 4, universityRoll: 1240439055, name: "AFTAB ALAM", present: false },
-  { classRoll: 5, universityRoll: 1240439064, name: "AKSHAT", present: false },
-  { classRoll: 6, universityRoll: 1240439089, name: "ANISH YADAV", present: false },
-  { classRoll: 7, universityRoll: 1240439095, name: "ANKIT KUMAR YADAV", present: false },
-  { classRoll: 8, universityRoll: 1240439103, name: "ANSHIKA YADAV", present: false },
-  { classRoll: 9, universityRoll: 1240439113, name: "ANUJ KUMAR", present: false },
-  { classRoll: 10, universityRoll: 1240439114, name: "ANUJ PAL", present: false },
-  { classRoll: 11, universityRoll: 1240439122, name: "ANUSH KUMAR MALL", present: false },
-  { classRoll: 12, universityRoll: 1240439139, name: "ASHISH PANDEY", present: false },
-  { classRoll: 13, universityRoll: 1240439146, name: "ASHWANI SINGH", present: false },
-  { classRoll: 14, universityRoll: 1240439150, name: "AVICHAL PANDEY", present: false },
-  { classRoll: 15, universityRoll: 1240439158, name: "AYUSH GUPTA", present: false },
-  { classRoll: 16, universityRoll: 1240439159, name: "AYUSH KUMAR MISHRA", present: false },
-  { classRoll: 17, universityRoll: 1240439166, name: "AYUSHI SHUKLA", present: false },
-  { classRoll: 18, universityRoll: 1240439169, name: "BHAVYA GUPTA", present: false },
-  { classRoll: 19, universityRoll: 1240439174, name: "DEEPAK PRAJAPATI", present: false },
-  { classRoll: 20, universityRoll: 1240439175, name: "DEEPANSHU GOYAL", present: false },
-  { classRoll: 21, universityRoll: 1240439190, name: "GARIMA SINGH", present: false },
-  { classRoll: 22, universityRoll: 1240439194, name: "GUNGUN GOSWAMI", present: false },
-  { classRoll: 23, universityRoll: 1240439208, name: "HIMANSHU", present: false },
-  { classRoll: 24, universityRoll: 1240439210, name: "HIMANSHU KUMAR", present: false },
-  { classRoll: 25, universityRoll: 1240439212, name: "HIMANSHU MAURYA", present: false },
-  { classRoll: 26, universityRoll: 1240439216, name: "KAMAKHYA SINGH YADAV", present: false },
-  { classRoll: 27, universityRoll: 1240439228, name: "KHUSHREET SETHI", present: false },
-  { classRoll: 28, universityRoll: 1240439233, name: "KRISHNA", present: false },
-  { classRoll: 29, universityRoll: 1240439247, name: "LAXMIISH SHUKLA", present: false },
-  { classRoll: 30, universityRoll: 1240439257, name: "MAULIK KESARWANI", present: false },
-  { classRoll: 31, universityRoll: 1240439263, name: "MD ISRAIL", present: false },
-  { classRoll: 32, universityRoll: 1240439286, name: "NANDITA GUPTA", present: false },
-  { classRoll: 33, universityRoll: 1240439289, name: "NIKHIL KUMAR YADAV", present: false },
-  { classRoll: 34, universityRoll: 1240439292, name: "NIRIKSHA SHAHI", present: false },
-  { classRoll: 35, universityRoll: 1240439308, name: "PIYUSH DUBEY", present: false },
-  { classRoll: 36, universityRoll: 1240439317, name: "PRANJAL GUPTA", present: false },
-  { classRoll: 37, universityRoll: 1240439322, name: "PRASHIDHI SINGH BHADAURIYA", present: false },
-  { classRoll: 38, universityRoll: 1240439344, name: "RAUNAK SINGH", present: false },
-  { classRoll: 39, universityRoll: 1240439345, name: "RAVIKANT YADAV", present: false },
-  { classRoll: 40, universityRoll: 1240439355, name: "RITIK KUMARI", present: false },
-  { classRoll: 41, universityRoll: 1240439366, name: "SACHIN PAL", present: false },
-  { classRoll: 42, universityRoll: 1240439368, name: "SAKSHAM CHAURASIA", present: false },
-  { classRoll: 43, universityRoll: 1240439391, name: "SATYAM SINGH", present: false },
-  { classRoll: 44, universityRoll: 1240439397, name: "SAURABH KASHYAP", present: false },
-  { classRoll: 45, universityRoll: 1240439401, name: "SHAFIQURRAHMAN ANSARI", present: false },
-  { classRoll: 46, universityRoll: 1240439404, name: "SHALENDER PAL", present: false },
-  { classRoll: 47, universityRoll: 1240439408, name: "SHANTANU", present: false },
-  { classRoll: 48, universityRoll: 1240439410, name: "SHASHANK SHEKHAR", present: false },
-  { classRoll: 49, universityRoll: 1240439412, name: "SHIKHAR KUMAR VISHWAKARMA", present: false },
-  { classRoll: 50, universityRoll: 1240439414, name: "SHIVA KUMAR TIWARI", present: false },
-  { classRoll: 51, universityRoll: 1240439426, name: "SHRESHTHA VERMA", present: false },
-  { classRoll: 52, universityRoll: 1240439431, name: "SHUBHAM CHAUBEY", present: false },
-  { classRoll: 53, universityRoll: 1240439432, name: "SHUBHAM GOYAL", present: false },
-  { classRoll: 54, universityRoll: 1240439438, name: "SIKHAR TIWARI", present: false },
-  { classRoll: 55, universityRoll: 1240439445, name: "SONU MISHRA", present: false },
-  { classRoll: 56, universityRoll: 1240439466, name: "TANISHQ SHUKLA", present: false },
-  { classRoll: 57, universityRoll: 1240439475, name: "UMESH MOURYA", present: false },
-  { classRoll: 58, universityRoll: 1240439480, name: "VAIBHAV SINGH", present: false },
-  { classRoll: 59, universityRoll: 1240439482, name: "VAIBHAV TIWARI", present: false },
-  { classRoll: 60, universityRoll: 1240439483, name: "VAIBHAV TRIPATHI", present: false },
-  { classRoll: 61, universityRoll: 1240439487, name: "VANSH SHARMA", present: false },
-  { classRoll: 62, universityRoll: 1240439512, name: "VISHNU TIWARI", present: false },
-  { classRoll: 63, universityRoll: 1240439514, name: "VIVEK CHAND", present: false },
-  { classRoll: 64, universityRoll: 1240439517, name: "YADAV YOGENDRA SANTOSH", present: false },
-  { classRoll: 65, universityRoll: 1240439526, name: "YASHRAJ YADAV", present: false },
-  { classRoll: 66, universityRoll: 1240439532, name: "YUVRAJ TIWARI", present: false }
-];
+  // Students data (unchanged structure)
+  const students = [
+    { classRoll: 1, universityRoll: 1240439040, name: "ADITYA KUMAR GUPTA", present: false },
+    { classRoll: 2, universityRoll: 1240439041, name: "ADITYA KUMAR MISHRA", present: false },
+    { classRoll: 3, universityRoll: 1240439042, name: "ADITYA MALL", present: false },
+    { classRoll: 4, universityRoll: 1240439055, name: "AFTAB ALAM", present: false },
+    { classRoll: 5, universityRoll: 1240439064, name: "AKSHAT", present: false },
+    { classRoll: 6, universityRoll: 1240439089, name: "ANISH YADAV", present: false },
+    { classRoll: 7, universityRoll: 1240439095, name: "ANKIT KUMAR YADAV", present: false },
+    { classRoll: 8, universityRoll: 1240439103, name: "ANSHIKA YADAV", present: false },
+    { classRoll: 9, universityRoll: 1240439113, name: "ANUJ KUMAR", present: false },
+    { classRoll: 10, universityRoll: 1240439114, name: "ANUJ PAL", present: false },
+    { classRoll: 11, universityRoll: 1240439122, name: "ANUSH KUMAR MALL", present: false },
+    { classRoll: 12, universityRoll: 1240439139, name: "ASHISH PANDEY", present: false },
+    { classRoll: 13, universityRoll: 1240439146, name: "ASHWANI SINGH", present: false },
+    { classRoll: 14, universityRoll: 1240439150, name: "AVICHAL PANDEY", present: false },
+    { classRoll: 15, universityRoll: 1240439158, name: "AYUSH GUPTA", present: false },
+    { classRoll: 16, universityRoll: 1240439159, name: "AYUSH KUMAR MISHRA", present: false },
+    { classRoll: 17, universityRoll: 1240439166, name: "AYUSHI SHUKLA", present: false },
+    { classRoll: 18, universityRoll: 1240439169, name: "BHAVYA GUPTA", present: false },
+    { classRoll: 19, universityRoll: 1240439174, name: "DEEPAK PRAJAPATI", present: false },
+    { classRoll: 20, universityRoll: 1240439175, name: "DEEPANSHU GOYAL", present: false },
+    { classRoll: 21, universityRoll: 1240439190, name: "GARIMA SINGH", present: false },
+    { classRoll: 22, universityRoll: 1240439194, name: "GUNGUN GOSWAMI", present: false },
+    { classRoll: 23, universityRoll: 1240439208, name: "HIMANSHU", present: false },
+    { classRoll: 24, universityRoll: 1240439210, name: "HIMANSHU KUMAR", present: false },
+    { classRoll: 25, universityRoll: 1240439212, name: "HIMANSHU MAURYA", present: false },
+    { classRoll: 26, universityRoll: 1240439216, name: "KAMAKHYA SINGH YADAV", present: false },
+    { classRoll: 27, universityRoll: 1240439228, name: "KHUSHREET SETHI", present: false },
+    { classRoll: 28, universityRoll: 1240439233, name: "KRISHNA", present: false },
+    { classRoll: 29, universityRoll: 1240439247, name: "LAXMIISH SHUKLA", present: false },
+    { classRoll: 30, universityRoll: 1240439257, name: "MAULIK KESARWANI", present: false },
+    { classRoll: 31, universityRoll: 1240439263, name: "MD ISRAIL", present: false },
+    { classRoll: 32, universityRoll: 1240439286, name: "NANDITA GUPTA", present: false },
+    { classRoll: 33, universityRoll: 1240439289, name: "NIKHIL KUMAR YADAV", present: false },
+    { classRoll: 34, universityRoll: 1240439292, name: "NIRIKSHA SHAHI", present: false },
+    { classRoll: 35, universityRoll: 1240439308, name: "PIYUSH DUBEY", present: false },
+    { classRoll: 36, universityRoll: 1240439317, name: "PRANJAL GUPTA", present: false },
+    { classRoll: 37, universityRoll: 1240439322, name: "PRASHIDHI SINGH BHADAURIYA", present: false },
+    { classRoll: 38, universityRoll: 1240439344, name: "RAUNAK SINGH", present: false },
+    { classRoll: 39, universityRoll: 1240439345, name: "RAVIKANT YADAV", present: false },
+    { classRoll: 40, universityRoll: 1240439355, name: "RITIK KUMARI", present: false },
+    { classRoll: 41, universityRoll: 1240439366, name: "SACHIN PAL", present: false },
+    { classRoll: 42, universityRoll: 1240439368, name: "SAKSHAM CHAURASIA", present: false },
+    { classRoll: 43, universityRoll: 1240439391, name: "SATYAM SINGH", present: false },
+    { classRoll: 44, universityRoll: 1240439397, name: "SAURABH KASHYAP", present: false },
+    { classRoll: 45, universityRoll: 1240439401, name: "SHAFIQURRAHMAN ANSARI", present: false },
+    { classRoll: 46, universityRoll: 1240439404, name: "SHALENDER PAL", present: false },
+    { classRoll: 47, universityRoll: 1240439408, name: "SHANTANU", present: false },
+    { classRoll: 48, universityRoll: 1240439410, name: "SHASHANK SHEKHAR", present: false },
+    { classRoll: 49, universityRoll: 1240439412, name: "SHIKHAR KUMAR VISHWAKARMA", present: false },
+    { classRoll: 50, universityRoll: 1240439414, name: "SHIVA KUMAR TIWARI", present: false },
+    { classRoll: 51, universityRoll: 1240439426, name: "SHRESHTHA VERMA", present: false },
+    { classRoll: 52, universityRoll: 1240439431, name: "SHUBHAM CHAUBEY", present: false },
+    { classRoll: 53, universityRoll: 1240439432, name: "SHUBHAM GOYAL", present: false },
+    { classRoll: 54, universityRoll: 1240439438, name: "SIKHAR TIWARI", present: false },
+    { classRoll: 55, universityRoll: 1240439445, name: "SONU MISHRA", present: false },
+    { classRoll: 56, universityRoll: 1240439466, name: "TANISHQ SHUKLA", present: false },
+    { classRoll: 57, universityRoll: 1240439475, name: "UMESH MOURYA", present: false },
+    { classRoll: 58, universityRoll: 1240439480, name: "VAIBHAV SINGH", present: false },
+    { classRoll: 59, universityRoll: 1240439482, name: "VAIBHAV TIWARI", present: false },
+    { classRoll: 60, universityRoll: 1240439483, name: "VAIBHAV TRIPATHI", present: false },
+    { classRoll: 61, universityRoll: 1240439487, name: "VANSH SHARMA", present: false },
+    { classRoll: 62, universityRoll: 1240439512, name: "VISHNU TIWARI", present: false },
+    { classRoll: 63, universityRoll: 1240439514, name: "VIVEK CHAND", present: false },
+    { classRoll: 64, universityRoll: 1240439517, name: "YADAV YOGENDRA SANTOSH", present: false },
+    { classRoll: 65, universityRoll: 1240439526, name: "YASHRAJ YADAV", present: false },
+    { classRoll: 66, universityRoll: 1240439532, name: "YUVRAJ TIWARI", present: false }
+  ];
 
-const subjects = [
-  { name: "Engineering & Managerial Economics", professor: "Ms. Sonam Gupta", code: "NHS4501" },
-  { name: "Concepts of Data Science with Python", professor: "Dr. Radhey Shyam", code: "NAI4501" },
-  { name: "Artificial Neural Network", professor: "Ms. Vaishnavi Yadav", code: "NAI4502" },
-  { name: "Computer Networks", professor: "Ms. Anshu Khare", code: "NCS4503" },
-  { name: "Automata Theory & Formal Languages", professor: "Ms. Kritika Chandra", code: "NCS4504" },
-  { name: "Essence of Indian Knowledge Tradition", professor: "NF", code: "NVC4501" },
-  { name: "Data Science with Python Lab", professor: "Dr. Radhey Shyam", code: "NAI4551" },
-  { name: "Artificial Neural Network Lab", professor: "Ms. Vaishnavi Yadav", code: "NAI4552" },
-  { name: "Computer Networks Lab", professor: "Ms. Anshu Khare", code: "NCS4553" },
-  { name: "Minor Project-I", professor: "Ms. Sapana Pal", code: "NAI4554" },
-  { name: "General Proficiency", professor: "Ms. Vaishnavi Yadav", code: "NGP4501" },
-  { name: "Library", professor: "", code: "LIB" }
-];
+  const subjects = [
+    { name: "Engineering & Managerial Economics", professor: "Ms. Sonam Gupta", code: "NHS4501" },
+    { name: "Concepts of Data Science with Python", professor: "Dr. Radhey Shyam", code: "NAI4501" },
+    { name: "Artificial Neural Network", professor: "Ms. Vaishnavi Yadav", code: "NAI4502" },
+    { name: "Computer Networks", professor: "Ms. Anshu Khare", code: "NCS4503" },
+    { name: "Automata Theory & Formal Languages", professor: "Ms. Kritika Chandra", code: "NCS4504" },
+    { name: "Essence of Indian Knowledge Tradition", professor: "NF", code: "NVC4501" },
+    { name: "Data Science with Python Lab", professor: "Dr. Radhey Shyam", code: "NAI4551" },
+    { name: "Artificial Neural Network Lab", professor: "Ms. Vaishnavi Yadav", code: "NAI4552" },
+    { name: "Computer Networks Lab", professor: "Ms. Anshu Khare", code: "NCS4553" },
+    { name: "Minor Project-I", professor: "Ms. Sapana Pal", code: "NAI4554" },
+    { name: "General Proficiency", professor: "Ms. Vaishnavi Yadav", code: "NGP4501" },
+    { name: "Library", professor: "", code: "LIB" }
+  ];
 
-
+  // DOM refs
   const tableBody = document.getElementById("student-table");
   const totalCount = document.getElementById("total-count");
   const presentCount = document.getElementById("present-count");
   const absentCount = document.getElementById("absent-count");
   const downloadPDFBtn = document.getElementById("download-pdf-btn");
   const subjectSelect = document.getElementById("subject-select");
+  const markAllBtn = document.getElementById("mark-all-btn");
+  const clearAllBtn = document.getElementById("clear-all-btn");
+  const saveBtn = document.getElementById("save-btn");
 
-  // Fill subject dropdown with combined info
+  const STORAGE_KEY = "ai2b_attendance_v1";
+
+  // Fill subject dropdown with combined info using data- attributes
   function fillSubjectSelect() {
     subjects.forEach((subj) => {
       const option = document.createElement("option");
-      option.value = `${subj.name}-${subj.professor}\n-${subj.code}`;
+      option.value = `${subj.code}`; // keep value as code
       option.textContent = `${subj.name} | ${subj.professor} | ${subj.code}`;
+      option.dataset.name = subj.name;
+      option.dataset.professor = subj.professor;
+      option.dataset.code = subj.code;
       subjectSelect.appendChild(option);
     });
   }
 
   fillSubjectSelect();
 
+  // Load saved attendance from localStorage
+  function loadSavedAttendance() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const map = JSON.parse(raw); // expected { classRoll: true/false }
+      students.forEach(s => {
+        if (map.hasOwnProperty(s.classRoll)) {
+          s.present = !!map[s.classRoll];
+        }
+      });
+    } catch (e) {
+      console.warn("Could not load saved attendance:", e);
+    }
+  }
+
+  // Save attendance into localStorage
+  function saveAttendance() {
+    try {
+      const map = {};
+      students.forEach(s => map[s.classRoll] = !!s.present);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
+      // Small feedback
+      saveBtn.textContent = "Saved ✓";
+      setTimeout(() => saveBtn.textContent = "Save Attendance", 1400);
+    } catch (e) {
+      alert("Failed to save attendance: " + e.message);
+    }
+  }
+
+  // Update summary counts
   function updateCounts() {
     const present = students.filter((s) => s.present).length;
     const absent = students.length - present;
 
+    totalCount.textContent = students.length;
     presentCount.textContent = present;
     absentCount.textContent = absent;
   }
 
-  students.forEach((student) => {
-    const row = document.createElement("tr");
+  // Render the table rows
+  function renderTable() {
+    tableBody.innerHTML = "";
+    students.forEach((student) => {
+      const row = document.createElement("tr");
+      row.tabIndex = 0; // make rows focusable for keyboard users
 
-    const rollCell = document.createElement("td");
-    rollCell.textContent = student.roll;
+      const rollCell = document.createElement("td");
+      rollCell.textContent = student.classRoll;
 
-    const nameCell = document.createElement("td");
-    nameCell.textContent = student.name;
+      const nameCell = document.createElement("td");
+      nameCell.textContent = student.name;
+      nameCell.style.textAlign = "left";
 
-    const checkboxCell = document.createElement("td");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.setAttribute('aria-label', `Mark ${student.name} as present`);
+      const checkboxCell = document.createElement("td");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = !!student.present;
+      checkbox.setAttribute('aria-label', `Mark ${student.name} as present`);
+      checkbox.dataset.roll = student.classRoll;
 
-    const statusCell = document.createElement("td");
-    statusCell.textContent = "Absent";
-
-    checkbox.addEventListener("change", (e) => {
-      student.present = e.target.checked;
+      const statusCell = document.createElement("td");
       statusCell.textContent = student.present ? "Present" : "Absent";
-      updateCounts();
+      statusCell.setAttribute("aria-live", "polite");
+
+      // Event: checkbox toggle
+      checkbox.addEventListener("change", (e) => {
+        student.present = e.target.checked;
+        statusCell.textContent = student.present ? "Present" : "Absent";
+        updateCounts();
+      });
+
+      // Clicking a row toggles the checkbox (except when clicking the checkbox itself)
+      row.addEventListener("click", (e) => {
+        if (e.target.tagName.toLowerCase() === "input") return;
+        checkbox.checked = !checkbox.checked;
+        checkbox.dispatchEvent(new Event('change'));
+      });
+
+      // Keyboard: Enter/Space toggles
+      row.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          checkbox.checked = !checkbox.checked;
+          checkbox.dispatchEvent(new Event('change'));
+        }
+      });
+
+      checkboxCell.appendChild(checkbox);
+
+      row.appendChild(rollCell);
+      row.appendChild(nameCell);
+      row.appendChild(checkboxCell);
+      row.appendChild(statusCell);
+
+      tableBody.appendChild(row);
     });
 
-    checkboxCell.appendChild(checkbox);
+    updateCounts();
+  }
 
-    row.appendChild(rollCell);
-    row.appendChild(nameCell);
-    row.appendChild(checkboxCell);
-    row.appendChild(statusCell);
+  // Mark all present
+  function markAll() {
+    students.forEach(s => s.present = true);
+    renderTable();
+  }
 
-    tableBody.appendChild(row);
-  });
+  // Clear all
+  function clearAll() {
+    students.forEach(s => s.present = false);
+    renderTable();
+  }
 
-  totalCount.textContent = students.length;
-  updateCounts();
+  // Utility: get selected subject info (returns object or null)
+  function getSelectedSubjectInfo() {
+    const idx = subjectSelect.selectedIndex;
+    if (idx <= 0) return null;
+    const opt = subjectSelect.options[idx];
+    return {
+      name: opt.dataset.name || "",
+      professor: opt.dataset.professor || "",
+      code: opt.dataset.code || opt.value || ""
+    };
+  }
 
+  // Date-time string for PDF
   function getCurrentDateTime() {
     return new Date().toLocaleString();
   }
 
+  // Download PDF of present students
   async function downloadPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+    const presentStudents = students.filter((s) => s.present);
+    if (presentStudents.length === 0) {
+      alert("No students marked present!");
+      return;
+    }
 
-  const presentStudents = students.filter((s) => s.present);
-  const total = students.length;
-  const present = presentStudents.length;
-  const absent = total - present;
+    // Use the UMD export loaded into window.jspdf
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+      alert("PDF library not loaded.");
+      return;
+    }
 
-  if (presentStudents.length === 0) {
-    alert("No students marked present!");
-    return;
+    const doc = new window.jspdf.jsPDF();
+
+    doc.setFontSize(16);
+    doc.text("AI-2B Attendance Report", 14, 20);
+
+    doc.setFontSize(11);
+    doc.text(`Date & Time: ${getCurrentDateTime()}`, 14, 30);
+
+    const subj = getSelectedSubjectInfo();
+    if (subj) {
+      doc.text(`Subject: ${subj.name}`, 14, 36);
+      doc.text(`Professor: ${subj.professor || "N/A"}`, 14, 42);
+      doc.text(`Code: ${subj.code}`, 14, 48);
+    } else {
+      doc.text("Subject/Professor/Code: Not selected", 14, 36);
+    }
+
+    const total = students.length;
+    const present = presentStudents.length;
+    const absent = total - present;
+
+    // Add attendance summary
+    doc.text(`Total Students: ${total}`, 14, 58);
+    doc.text(`Present Students: ${present}`, 14, 64);
+    doc.text(`Absent Students: ${absent}`, 14, 70);
+
+    // Prepare table data
+    const tableColumn = ["Roll No", "Name", "University Roll"];
+    const tableRows = presentStudents.map((s) => [String(s.classRoll), s.name, String(s.universityRoll || "")]);
+
+    // autoTable startY
+    const startY = 80;
+
+    // Use autoTable plugin (it augments jsPDF)
+    if (typeof doc.autoTable === "function") {
+      doc.autoTable({
+        head: [tableColumn],
+        body: tableRows,
+        startY,
+        theme: 'striped',
+        headStyles: { fillColor: [0, 123, 255] },
+        styles: { fontSize: 10 }
+      });
+    } else {
+      // Fallback: if autoTable not available, output a simple list
+      let y = startY;
+      doc.setFontSize(10);
+      doc.text("Present Students:", 14, y);
+      y += 6;
+      presentStudents.forEach(s => {
+        doc.text(`${s.classRoll} - ${s.name}`, 14, y);
+        y += 6;
+        if (y > 280) {
+          doc.addPage();
+          y = 20;
+        }
+      });
+    }
+
+    doc.save("AI-2B-Attendance.pdf");
   }
 
-  doc.setFontSize(16);
-  doc.text("AI-2B Attendance Report", 14, 20);
-
-  doc.setFontSize(12);
-  doc.text(`Date & Time: ${getCurrentDateTime()}`, 14, 30);
-
-  if (subjectSelect.value) {
-    doc.text(`Subject/Professor/Code: ${subjectSelect.value}`, 14, 40);
-  } else {
-    doc.text("Subject/Professor/Code: Not selected", 14, 40);
-  }
-
-  // Add attendance summary
-  doc.text(`Total Students: ${total}`, 14, 50);
-  doc.text(`Present Students: ${present}`, 14, 57);
-  doc.text(`Absent Students: ${absent}`, 14, 64);
-
-  // Prepare table data
-  const tableColumn = ["Roll No", "Name"];
-  const tableRows = presentStudents.map((s) => [s.roll, s.name]);
-
-  doc.autoTable({
-    head: [tableColumn],
-    body: tableRows,
-    startY: 72, // start below the summary
+  // Wiring up buttons
+  markAllBtn.addEventListener("click", () => {
+    if (!confirm("Mark all students present?")) return;
+    markAll();
   });
 
-  doc.save("AI-2B-Attendance.pdf");
-}
+  clearAllBtn.addEventListener("click", () => {
+    if (!confirm("Clear all attendance selections?")) return;
+    clearAll();
+  });
 
-
+  saveBtn.addEventListener("click", saveAttendance);
   downloadPDFBtn.addEventListener("click", downloadPDF);
+
+  // Initialize: load saved + render
+  loadSavedAttendance();
+  renderTable();
+
+  // Auto-save on unload (optional)
+  window.addEventListener("beforeunload", () => {
+    try {
+      const map = {};
+      students.forEach(s => map[s.classRoll] = !!s.present);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
+    } catch (e) { /* ignore */ }
+  });
 </script>
 </body>
 </html>
